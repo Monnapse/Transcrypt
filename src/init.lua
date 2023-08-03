@@ -20,6 +20,15 @@ export type EventPush = {
 
 local signal = {}
 
+--[=[
+    Fire an event to either the client or the server, if on the client then this sends to the server, if your on server then to client.
+
+    @server
+    @client
+
+    @param Name string -- Name of the Plug
+    @param ... any -- The parameters you want to pass
+]=]
 function signal:Fire(Name: string, ...)
     if RunService:IsClient() then
         self.remote:FireServer(Name,...)
@@ -28,13 +37,31 @@ function signal:Fire(Name: string, ...)
     end
 end
 
+--[=[
+    Fire an event to the client
+
+    @server
+
+    @param Player Player -- The player you want to send an event to
+    @param Name string -- the name of the plug
+    @param ... any -- The parameters you want to pass
+]=]
 function signal:FireAClient(Player: Player, Name: string, ...)
     if RunService:IsServer() then
         self.remotes[Player.UserId]:FireClient(Player, Name, ...)
     end
 end
 
-function signal:Plug(Name, Callback)
+--[=[
+    Create a plug, this is where you add events
+
+    @client
+    @server
+
+    @param Name string -- the name of the plug
+    @param Callback function -- callback function for when the plug is called
+]=]
+function signal:Plug(Name: string, Callback)
     self.Plugs[Name] = Callback
 
     if self.Queue and #self.Queues > 0 then
@@ -44,6 +71,9 @@ function signal:Plug(Name, Callback)
     return self
 end
 
+--[=[
+    Where the Events are handled
+]=]
 function signal:HandleEvents()
     if self.Queue and #self.Plugs > 0 then
         for Index, Event: EventPush in ipairs(self.Queues) do
@@ -63,6 +93,9 @@ function signal:HandleEvents()
     end
 end
 
+--[=[
+    Where Events Queues are handled
+]=]
 function signal:HandleQueue()
     if self.Queue and self.Plugs[self.argsName] == nil then--and self.Plugs[self.argsName] == nil then
         local Event: EventPush = {
@@ -75,6 +108,15 @@ end
 
 local transcript = {}
 
+--[=[
+    To initialize transcrypt
+
+    @class
+    @client
+    @server
+
+    @param Folder Folder -- The folder where you want the remote events to be stored
+]=]
 function transcript.init(Folder: Folder?)
     if not Folder and not game.ReplicatedStorage:FindFirstChild("Events") then
         Folder = Instance.new("Folder",game.ReplicatedStorage)
