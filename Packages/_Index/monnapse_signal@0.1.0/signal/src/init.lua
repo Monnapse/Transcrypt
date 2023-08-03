@@ -19,6 +19,8 @@ export type signal = {}
 
     @client
     @server
+
+    @return signal
 ]=]
 function signal.new(): signal
     local self = setmetatable({}, signal)

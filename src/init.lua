@@ -18,6 +18,11 @@ export type EventPush = {
     args: {}
 }
 
+--[=[
+    @class signal
+    @client
+    @server
+]=]
 local signal = {}
 
 --[=[
@@ -73,6 +78,7 @@ end
 
 --[=[
     Where the Events are handled
+    @private
 ]=]
 function signal:HandleEvents()
     if self.Queue and #self.Plugs > 0 then
@@ -106,12 +112,17 @@ function signal:HandleQueue()
     end
 end
 
+--[=[
+    @class transcrypt
+    @client
+    @server
+    Easily send signals to the server or server to client, let transcrypt take care of all of the remotes for you.
+]=]
 local transcript = {}
 
 --[=[
     To initialize transcrypt
 
-    @class init
     @client
     @server
 
