@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[143],{63891:s=>{s.exports=JSON.parse('{"sourceUrl":"https://github.com/Monnapse/Transcrypt/blob/master","baseUrl":"/Transcrypt/","classOrder":[],"apiCategories":[]}')}}]);
