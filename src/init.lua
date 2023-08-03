@@ -19,11 +19,12 @@ export type EventPush = {
 }
 
 --[=[
-    @class signal
+    @class connection
     @client
     @server
 ]=]
-local signal = {}
+local connection = {}
+connection.__index = connection
 
 --[=[
     Fire an event to either the client or the server, if on the client then this sends to the server, if your on server then to client.
@@ -34,7 +35,7 @@ local signal = {}
     @param Name string -- Name of the Plug
     @param ... any -- The parameters you want to pass
 ]=]
-function signal:Fire(Name: string, ...)
+function connection:Fire(Name: string, ...)
     if RunService:IsClient() then
         self.remote:FireServer(Name,...)
     elseif RunService:IsServer() then
@@ -51,7 +52,7 @@ end
     @param Name string -- the name of the plug
     @param ... any -- The parameters you want to pass
 ]=]
-function signal:FireAClient(Player: Player, Name: string, ...)
+function connection:FireAClient(Player: Player, Name: string, ...)
     if RunService:IsServer() then
         self.remotes[Player.UserId]:FireClient(Player, Name, ...)
     end
@@ -66,7 +67,7 @@ end
     @param Name string -- the name of the plug
     @param Callback function -- callback function for when the plug is called
 ]=]
-function signal:Plug(Name: string, Callback)
+function connection:Plug(Name: string, Callback)
     self.Plugs[Name] = Callback
 
     if self.Queue and #self.Queues > 0 then
@@ -78,9 +79,11 @@ end
 
 --[=[
     Where the Events are handled
+    @client
+    @server
     @private
 ]=]
-function signal:HandleEvents()
+function connection:HandleEvents()
     if self.Queue and #self.Plugs > 0 then
         for Index, Event: EventPush in ipairs(self.Queues) do
             for Name, Callback in pairs(self.Plugs) do
@@ -101,8 +104,11 @@ end
 
 --[=[
     Where Events Queues are handled
+    @client
+    @server
+    @private
 ]=]
-function signal:HandleQueue()
+function connection:HandleQueue()
     if self.Queue and self.Plugs[self.argsName] == nil then--and self.Plugs[self.argsName] == nil then
         local Event: EventPush = {
             Name = self.argsName,
@@ -118,7 +124,8 @@ end
     @server
     Easily send signals to the server or server to client, let transcrypt take care of all of the remotes for you.
 ]=]
-local transcript = {}
+local transcrypt = {}
+transcrypt.__index = transcrypt
 
 --[=[
     To initialize transcrypt
@@ -128,13 +135,13 @@ local transcript = {}
 
     @param Folder Folder -- The folder where you want the remote events to be stored
 ]=]
-function transcript.init(Folder: Folder?)
+function transcrypt.init(Folder: Folder?)
     if not Folder and not game.ReplicatedStorage:FindFirstChild("Events") then
         Folder = Instance.new("Folder",game.ReplicatedStorage)
         Folder.Name = "Events"
     end
 
-    local self = signal
+    local self = connection
     self.Plugs = {}
 
     --// If remote is fired and no plugs then wait for a plug and then fire plug
@@ -200,4 +207,4 @@ function transcript.init(Folder: Folder?)
     return self
 end
 
-return transcript
+return transcrypt
