@@ -111,7 +111,7 @@ local transcript = {}
 --[=[
     To initialize transcrypt
 
-    @class
+    @class init
     @client
     @server
 
