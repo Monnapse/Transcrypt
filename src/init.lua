@@ -10,7 +10,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 --// Packages
-local Signal = require(script.Packages.signal)
+local Signal = require(script.Parent.signal)
 
 --// Type
 export type EventPush = {
@@ -184,11 +184,13 @@ function transcrypt.init(Folder: Folder?)
             self.OnEvent:Fire()
         end)
     elseif RunService:IsServer() then
+        self.PlayerAdded = Signal.new()
         self.globalRemote = Instance.new("RemoteEvent", Folder)
         self.globalRemote.Name = "GlobalRemote"
         self.remotes = {}
 
         Players.PlayerAdded:Connect(function(Player)
+            self.PlayerAdded:Fire(Player)
             self.remotes[Player.UserId] = Instance.new("RemoteEvent", Folder)
             self.remotes[Player.UserId].Name = Player.UserId
 
