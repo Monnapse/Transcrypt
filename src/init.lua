@@ -209,8 +209,4 @@ function transcrypt.init(Folder: Folder?)
     return self
 end
 
-<<<<<<< HEAD
 return transcrypt
-=======
-return transcript
->>>>>>> 0be085f0ed5d2146827e8dd80b652e49dcb640ed
