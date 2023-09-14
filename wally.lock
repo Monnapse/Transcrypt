@@ -9,5 +9,5 @@ dependencies = []
 
 [[package]]
 name = "monnapse/transcrypt"
-version = "0.1.1"
+version = "0.1.0"
 dependencies = [["signal", "monnapse/signal@0.1.0"]]
