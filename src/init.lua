@@ -10,7 +10,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
 --// Packages
-local Signal = require(script.Packages.signal)
+local Signal = require(script.Parent.signal)
 
 --// Type
 export type EventPush = {
