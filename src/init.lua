@@ -190,9 +190,10 @@ function transcrypt.init(Folder: Folder?)
         self.remotes = {}
 
         Players.PlayerAdded:Connect(function(Player)
-            self.PlayerAdded:Fire(Player)
             self.remotes[Player.UserId] = Instance.new("RemoteEvent", Folder)
             self.remotes[Player.UserId].Name = Player.UserId
+
+            self.PlayerAdded:Fire(Player)
 
             self.remotes[Player.UserId].OnServerEvent:Connect(function(Player, Name, ...)
                 local args = {Player, ...}
