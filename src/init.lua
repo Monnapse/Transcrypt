@@ -136,6 +136,7 @@ transcrypt.__index = transcrypt
     @param Folder Folder -- The folder where you want the remote events to be stored
 ]=]
 function transcrypt.init(Folder: Folder?)
+    Folder = Folder or game.ReplicatedStorage:FindFirstChild("Events")
     if not Folder and not game.ReplicatedStorage:FindFirstChild("Events") then
         Folder = Instance.new("Folder",game.ReplicatedStorage)
         Folder.Name = "Events"
