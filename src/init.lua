@@ -175,6 +175,7 @@ function transcrypt.init(Folder: Folder?)
             end
         end
 
+        task.wait(1.5)
         self.remote = Folder:FindFirstChild(tostring(UserId))
         self.globalRemote = Folder.GlobalRemote
 
