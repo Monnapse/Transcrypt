@@ -127,6 +127,15 @@ end
 local transcrypt = {}
 transcrypt.__index = transcrypt
 
+export type Transcrypt = {
+    Queue: boolean,
+
+    Plug: (self: Transcrypt, Name: string, Callback: (any)) -> nil,
+    UnPlug: (self: Transcrypt, Name: string) -> nil,
+    FireAClient: (self: Transcrypt, Player: Player, Name: string, any) -> nil,
+    Fire: (self: Transcrypt, Name: string, any) -> nil,
+}
+
 --[=[
     To initialize transcrypt
 
